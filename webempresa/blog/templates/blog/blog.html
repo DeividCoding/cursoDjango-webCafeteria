@@ -1,0 +1,46 @@
+{% extends 'Core/baseCore.html'  %}
+
+{% block titulo %}Blog | La Caffettiera{% endblock titulo %}
+
+{% block contenido %}
+
+{% for cadaPublicacion in listaPublicaciones %}
+
+<section class="page-section cta">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <div class="cta-innerv text-center rounded">
+          <h2 class="section-heading mb-5">
+            <span class="section-heading-upper">{{cadaPublicacion.fechaPublicacion}}
+            </span>
+            <span class="section-heading-lower">{{cadaPublicacion.titulo}}</span>
+          </h2>
+          <p class="mb-0">
+            {% load static %}
+            <img class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{{cadaPublicacion.imagen.url}}" alt="">
+          </p>
+          <p class="mb-0 mbt"> 
+            {{cadaPublicacion.contenido|safe}}
+          </p>
+          <p class="mb-0 mbt">
+            <span class="section-heading-under">Publicado por <em><b>{{cadaPublicacion.autor}}</b></em> en 
+              <em>
+              {% for cadaCategoria in cadaPublicacion.categorias.all%}
+
+              <a href="{% url 'blog'  %}?idCategoria={{cadaCategoria.id}}" > {{cadaCategoria}} </a> {% if not forloop.last %},{% endif %}
+              {% endfor %}
+              </em>
+            </span>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+{% endblock %}
+
+
